@@ -11,7 +11,3 @@ exports.spotifyKey = {
   id: "56d25c1d37c540b583cb5b582e1d0c2e",
   secret: "55dc756b0a1a49c2a5040e45b39346cf",
 }
-
-// var spotify = new Spotify({
-//
-// });
