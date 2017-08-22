@@ -8,21 +8,6 @@ var fs = require("fs");
 //setting user input to var
 var searchItem = process.argv[3];
 
-//allows twitter to call tweets
-var client = new Twitter({
-  consumer_key: 'NZecOzIXgDLnQcz3QO8wckula',
-  consumer_secret: 'VA2GjVSsvidaKLWGRRCyZytnKsu75o4REJkM2UjC7P89oRFgP1',
-  access_token_key: '825859617288761346-RxxRh0bpXPQ9kTwe4rEvHkMIcMHcE43',
-  access_token_secret: '6YYRU6sr3LGxriodnJ19xKBp2l1lpQvSKT7x0Wytry462',
-});
-
-
-//spotify api call
-var spotify = new Spotify({
-  id: "56d25c1d37c540b583cb5b582e1d0c2e",
-  secret: "55dc756b0a1a49c2a5040e45b39346cf"
-});
-
 //switch for running specified function
 switch (process.argv[2]) {
   case "spotify-this-song":
@@ -41,6 +26,8 @@ switch (process.argv[2]) {
 
 //spotify function when calling "spotify-this-song"
 function spotifyNode() {
+
+var spotify = new Spotify (keys.spotifyKey);
 
   //if song search is empty, default to song
   if (!searchItem) {
@@ -99,6 +86,8 @@ function spotifyNode() {
 //twitter function
 function twitterNode() {
 
+var client = new Twitter (keys.twitterKeys);
+
   //write out some tweets
   client.get('search/tweets', {
     id: 825859617288761346,
@@ -115,8 +104,8 @@ function movieNode(){
   var request = require('request');
   //api key 7fc00fef
   //var API_KEY = "7fc00fef";
-  request("http://www.omdbapi.com/?t=" + searchItem + "apikey=7fc00fef", function (error, response, body) {
-
+  request("http://www.omdbapi.com/?t=" + searchItem + "&y=&plot=short&apikey=40e9cece"
+  , function (error, response, body) {
     console.log("Movie title: " + JSON.parse(body).Title);
     console.log("Year movie came out: " + JSON.parse(body).Year);
     console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
@@ -133,7 +122,7 @@ function doThisNode() {
       return console.log(err);
     } else {
       // Break down all the itmes in the data array
-      data = data.split(", ");
+      data = data.split(",");
       var command = data[0];
       var songName = data[1];
       console.log(command + " " + songName);
